@@ -26,8 +26,8 @@ contract Leaderboard {
     // user didn't make it to leaderboard
     if (leaderboard[leaderboardLength].score >= score) return false;
 
-      for (uint i=0; i<leaderboardLength; i++) {
-        if (leaderboard[i].score < score) {
+    for (uint i=0; i<leaderboardLength; i++) {
+      if (leaderboard[i].score < score) {
 
         // shift leaderboard
         User memory currentUser = leaderboard[i];
@@ -50,5 +50,4 @@ contract Leaderboard {
       }
     }
   }
-  
 }
