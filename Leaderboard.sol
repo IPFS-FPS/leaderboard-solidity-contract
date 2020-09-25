@@ -24,7 +24,7 @@ contract Leaderboard {
 
   function addScore(string memory user, uint score) onlyOwner() public returns (bool) {
     // user didn't make it to leaderboard
-    if (leaderboard[leaderboardLength].score >= score) return false;
+    if (leaderboard[leaderboardLength-1].score >= score) return false;
 
     for (uint i=0; i<leaderboardLength; i++) {
       if (leaderboard[i].score < score) {
