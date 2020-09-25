@@ -1,5 +1,6 @@
 pragma solidity >=0.6.6;
 
+// lower score means higher ranking
 contract Leaderboard {
   address owner;
 
@@ -15,6 +16,13 @@ contract Leaderboard {
     
   constructor() public{
     owner = msg.sender;
+    // insert user with max scores
+    for (uint i=0; i<leaderboardLength; i++) {
+      leaderboard[i] = User({
+        user: "---",
+        score: 9999 // up to 2**256-1
+      });
+    }
   }
 
   modifier onlyOwner(){
@@ -24,10 +32,10 @@ contract Leaderboard {
 
   function addScore(string memory user, uint score) onlyOwner() public returns (bool) {
     // user didn't make it to leaderboard
-    if (leaderboard[leaderboardLength-1].score >= score) return false;
+    if (leaderboard[leaderboardLength-1].score <= score) return false;
 
     for (uint i=0; i<leaderboardLength; i++) {
-      if (leaderboard[i].score < score) {
+      if (leaderboard[i].score > score) {
 
         // shift leaderboard
         User memory currentUser = leaderboard[i];
