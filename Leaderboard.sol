@@ -3,7 +3,6 @@ pragma solidity >=0.6.6;
 contract Leaderboard {
   address owner;
 
-  // list top 10 users
   uint leaderboardLength = 10;
 
   mapping (uint => User) public leaderboard;
@@ -23,13 +22,11 @@ contract Leaderboard {
   }
 
   function addScore(string memory user, uint score) onlyOwner() public returns (bool) {
-    // user didn't make it to leaderboard
     if (leaderboard[leaderboardLength-1].score >= score) return false;
 
     for (uint i=0; i<leaderboardLength; i++) {
       if (leaderboard[i].score < score) {
 
-        // shift leaderboard
         User memory currentUser = leaderboard[i];
         for (uint j=i+1; j<leaderboardLength+1; j++) {
           User memory nextUser = leaderboard[j];
@@ -37,13 +34,11 @@ contract Leaderboard {
           currentUser = nextUser;
         }
 
-        // insert
         leaderboard[i] = User({
           user: user,
           score: score
         });
 
-        // delete last from list
         delete leaderboard[leaderboardLength];
 
         return true;
